@@ -9,6 +9,7 @@ import Dialog from '../components/dialog.svelte';
 import Guy from '../components/guy.svelte';
 import { auth } from '../lib/firebase';
 import { signInAnonymously } from "firebase/auth";
+import { goto } from '$app/navigation';
 
 let filters = {
     city: '',
@@ -49,7 +50,7 @@ onMount(() => {
 const isEmpty = restrantIsEmpty();
 isEmpty.subscribe(isEmpty => {
     if (isEmpty) {
-        // router.goto('/setup');
+        goto('/setup');
     }
 });
 

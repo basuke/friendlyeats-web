@@ -5,11 +5,12 @@ import { restrantIsEmpty } from '../../lib/stores';
 import { addMockRestaurants } from '../../lib/mock';
 import Guy from '../../components/guy.svelte';
 import { config } from '../../lib/firebase';
+import { goto } from '$app/navigation';
 
 const isEmpty = restrantIsEmpty();
 isEmpty.subscribe(isEmpty => {
     if (isEmpty !== undefined && !isEmpty) {
-        // router.goto('/');
+        goto('/');
     }
 });
 

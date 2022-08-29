@@ -1,18 +1,19 @@
 <script>
 
 import Rating from "./rating.svelte";
+import { goto } from '$app/navigation';
 
 export let id = null;
 export let data = null;
 
 function clicked(event) {
-    // router.goto("/restaurants/" + id);
+    goto("/restaurants/" + id);
 }
 
 </script>
 
 <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
-    <a class="location-card mdc-card mdc-shadow--2dp" href="/restaurants/{id}">
+    <div class="location-card mdc-card mdc-shadow--2dp" on:click={clicked}>
         <div class="mdc-card__title" style:background-image="url({data.photo})" />
         <div class="mdc-card__supporting-text">
             <h2>{data.name}</h2>
@@ -28,5 +29,5 @@ function clicked(event) {
                 <span class="info">{data.city}</span>
             </div>
         </div>
-    </a>
+    </div>
 </div>
