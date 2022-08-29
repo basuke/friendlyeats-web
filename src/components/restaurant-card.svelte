@@ -1,5 +1,4 @@
 <script>
-import { router } from "tinro";
 
 import Rating from "./rating.svelte";
 
@@ -7,7 +6,7 @@ export let id = null;
 export let data = null;
 
 function clicked(event) {
-    router.goto("/restaurants/" + id);
+    // router.goto("/restaurants/" + id);
 }
 
 </script>
