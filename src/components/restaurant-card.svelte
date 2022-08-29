@@ -12,7 +12,7 @@ function clicked(event) {
 </script>
 
 <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
-    <div class="location-card mdc-card mdc-shadow--2dp" on:click={clicked} >
+    <a class="location-card mdc-card mdc-shadow--2dp" href="/restaurants/{id}">
         <div class="mdc-card__title" style:background-image="url({data.photo})" />
         <div class="mdc-card__supporting-text">
             <h2>{data.name}</h2>
@@ -28,5 +28,5 @@ function clicked(event) {
                 <span class="info">{data.city}</span>
             </div>
         </div>
-    </div>
+    </a>
 </div>
