@@ -13,79 +13,78 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { db }  from './firebase';
+import { collection, runTransaction, where, orderBy, limit, query, onSnapshot, doc, getDoc, addDoc } from 'firebase/firestore';
+
+export function restaurants() {
+    return collection(db, 'restaurants');
+}
 
 export function addRestaurant(data) {
-    var collection = firebase.firestore().collection('restaurants');
-    return collection.add(data);
+    return addDoc(restaurants(), data);
 }
   
 export function allRestaurantsQuery() {
-    return firebase.firestore()
-                            .collection('restaurants')
-                            .orderBy('avgRating', 'desc')
-                            .limit(50);
+    return query(restaurants(), orderBy('avgRating', 'desc'), limit(50));
 }
 
 export function getRestrantCount(update) {
-    return firebase.firestore()
-                            .collection('restaurants')
-                            .limit(1)
-                            .onSnapshot(snapshot => {
-                                update(snapshot.size);
-                            });
+    const q = query(restaurants(), limit(1));
+    return onSnapshot(q, snapshot => update(snapshot.size));
 }
 
 export function getRestaurant(id) {
-    return firebase.firestore().collection('restaurants').doc(id).get();
-}
-
-export function restaurantReviewsQuery(doc) {
-    return doc.ref.collection('ratings').orderBy('timestamp', 'desc');
+    return getDoc(doc(restaurants(), id));
 }
 
 export function filteredRestaurantsQuery(filters) {
-    var query = firebase.firestore().collection('restaurants');
+    const conditions = [];
     
     if (filters.category !== 'Any') {
-        query = query.where('category', '==', filters.category);
+        conditions.push(where('category', '==', filters.category));
     }
     
     if (filters.city !== 'Any') {
-        query = query.where('city', '==', filters.city);
+        conditions.push(where('city', '==', filters.city));
     }
     
     if (filters.price !== 'Any') {
-        query = query.where('price', '==', filters.price.length);
+        conditions.push(where('price', '==', filters.price.length));
     }
     
     if (filters.sort === 'Rating') {
-        query = query.orderBy('avgRating', 'desc');
+        conditions.push(orderBy('avgRating', 'desc'));
     } else if (filters.sort === 'Reviews') {
-        query = query.orderBy('numRatings', 'desc');
+        conditions.push(orderBy('numRatings', 'desc'));
     }
     
-    return query;
+    return query(restaurants(), ...conditions);
 }
-  
+
+export function restaurantRaitings(ref) {
+    return collection(ref, 'ratings');
+}
+
+export function restaurantReviewsQuery(doc) {
+    return query(restaurantRaitings(doc.ref), orderBy('timestamp', 'desc'));
+}
+
 export function addRating(restaurantID, rating) {
-    var collection = firebase.firestore().collection('restaurants');
-    var document = collection.doc(restaurantID);
-    var newRatingDocument = document.collection('ratings').doc();
-    console.log(rating);
+    var restrantRef = doc(restaurants(), restaurantID);
+    const newDoc = doc(restaurantRaitings(restrantRef));
 
-    return firebase.firestore().runTransaction(function(transaction) {
-        return transaction.get(document).then(function(doc) {
-            var data = doc.data();
+    runTransaction(db, async (transaction) => {
+        const doc = await transaction.get(restrantRef);
+        var data = doc.data();
 
-            var newAverage =
-                (data.numRatings * data.avgRating + rating.rating) /
-                (data.numRatings + 1);
+        var newAverage =
+            (data.numRatings * data.avgRating + rating.rating) /
+            (data.numRatings + 1);
 
-            transaction.update(document, {
-                numRatings: data.numRatings + 1,
-                avgRating: newAverage
-            });
-            return transaction.set(newRatingDocument, rating);
+        transaction.update(restrantRef, {
+            numRatings: data.numRatings + 1,
+            avgRating: newAverage
         });
+        transaction.set(newDoc, rating);
     });
 }
