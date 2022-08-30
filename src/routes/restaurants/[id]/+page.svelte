@@ -7,12 +7,11 @@ import { getRestaurant, addRating } from '../../../lib/firestore';
 import AddReview from '../../../components/add-review.svelte';
 import Guy from '../../../components/guy.svelte';
 import { auth } from '../../../lib/firebase';
-import { browser } from '$app/environment';
 
 /** @type {import('./$types').PageData} */
 export let data;
 
-console.log('+page.svelte', data.id, browser ? 'browser' : 'server');
+console.log('+page.svelte', data)
 
 const id = data.id;
 

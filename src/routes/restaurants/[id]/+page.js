@@ -1,7 +1,7 @@
-import { browser } from '$app/environment';
-
+import { error } from '@sveltejs/kit';
+ 
 /** @type {import('./$types').PageLoad} */
 export function load({ params }) {
-    console.log('+page.js', params.id, browser ? 'browser' : 'server');
+    console.log('+page.js', params)
     return { id: params.id };
 }
