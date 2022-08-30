@@ -1,6 +1,6 @@
 <script>
 
-import { categories, cities } from '../lib/data';
+import { categories, cities } from '../data';
 
 export let filters = {};
 

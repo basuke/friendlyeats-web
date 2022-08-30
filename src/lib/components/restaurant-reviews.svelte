@@ -1,7 +1,7 @@
 <script>
 
-import { addMockRatings } from '../lib/mock';
-import { getReviews } from '../lib/stores';
+import { addMockRatings } from '../mock';
+import { getReviews } from '../stores';
 import Guy from './guy.svelte';
 import Rating from './rating.svelte';
 

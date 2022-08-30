@@ -1,7 +1,7 @@
 <script>
 import { createEventDispatcher } from 'svelte';
 
-import { descriptionForFilter} from '../lib/query';
+import { descriptionForFilter} from '../query';
 
 export let filters = null;
 

@@ -1,10 +1,10 @@
 <script>
 
-import HeaderBase from '../../components/header-base.svelte';
-import { restrantIsEmpty } from '../../lib/stores';
-import { addMockRestaurants } from '../../lib/mock';
-import Guy from '../../components/guy.svelte';
-import { config } from '../../lib/firebase';
+import HeaderBase from '$lib/components/header-base.svelte';
+import { restrantIsEmpty } from '$lib/stores';
+import { addMockRestaurants } from '$lib/mock';
+import Guy from '$lib/components/guy.svelte';
+import { config } from '$lib/firebase';
 import { goto } from '$app/navigation';
 
 const isEmpty = restrantIsEmpty();

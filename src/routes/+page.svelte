@@ -1,13 +1,13 @@
 <script>
 
 import { onMount } from 'svelte';
-import { getRestaurants, restrantIsEmpty } from '../lib/stores';
-import RestaurantCard from "../components/restaurant-card.svelte";
-import HeaderBase from '../components/header-base.svelte';
-import FilterDialog from '../components/filter-dialog.svelte';
-import Dialog from '../components/dialog.svelte';
-import Guy from '../components/guy.svelte';
-import { auth } from '../lib/firebase';
+import { getRestaurants, restrantIsEmpty } from '$lib/stores';
+import RestaurantCard from "$lib/components/restaurant-card.svelte";
+import HeaderBase from '$lib/components/header-base.svelte';
+import FilterDialog from '$lib/components/filter-dialog.svelte';
+import Dialog from '$lib/components/dialog.svelte';
+import Guy from '$lib/components/guy.svelte';
+import { auth } from '$lib/firebase';
 import { signInAnonymously } from "firebase/auth";
 import { goto } from '$app/navigation';
 
