@@ -7,8 +7,6 @@ import HeaderBase from '$lib/components/header-base.svelte';
 import FilterDialog from '$lib/components/filter-dialog.svelte';
 import Dialog from '$lib/components/dialog.svelte';
 import Guy from '$lib/components/guy.svelte';
-import { auth } from '$lib/firebase';
-import { signInAnonymously } from "firebase/auth";
 import { goto } from '$app/navigation';
 
 let filters = {
@@ -18,7 +16,6 @@ let filters = {
     sort: 'Rating'
 };
 
-signInAnonymously(auth).catch(err => console.log(err));
 
 $: restaurants = getRestaurants(filters);
 
